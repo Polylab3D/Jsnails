@@ -6,14 +6,14 @@
 const CONFIG = {
   // Informações do Negócio
   business: {
-    name: 'Nome do Negócio',           // Ex: "Wellen Barbosa Nails Designer"
+    name: 'Jacqueline Sillis',           // Ex: "Nails Designer"
     logoFile: 'logo.png',               // Nome do arquivo do logo (deve estar na mesma pasta)
   },
 
   // Número MBWay
   mbway: {
-    phoneDisplay: '000 000 000',        // Formato visual (com espaços)
-    phoneValue: '000000000',            // Número real (sem espaços, será copiado)
+    phoneDisplay: '+351 967 872 889',        // Formato visual (com espaços)
+    phoneValue: '967872889',            // Número real (sem espaços, será copiado)
   },
 
   // Cores e Estilo

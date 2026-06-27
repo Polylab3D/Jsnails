@@ -7,7 +7,7 @@ const CONFIG = {
   // Informações do Negócio
   business: {
     name: 'Jacqueline Sillis',           // Ex: "Nails Designer"
-    logoFile: 'logo.png',               // Nome do arquivo do logo (deve estar na mesma pasta)
+    logoFile: 'logo.svg',               // Nome do arquivo do logo (deve estar na mesma pasta)
   },
 
   // Número MBWay

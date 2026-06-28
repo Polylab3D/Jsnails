@@ -190,9 +190,8 @@ function copiarEAbrirMBWay() {
   `;
   openBtn.textContent = '→ Abrir MB WAY agora';
 
- if (isAndroid) {
-  const fallback = encodeURIComponent('https://play.google.com/store/apps/details?id=pt.sibs.android.mbway');
-  openBtn.href = 'intent:#Intent;package=pt.sibs.android.mbway;S.browser_fallback_url=' + fallback + ';end';
+if (isAndroid) {
+  openBtn.href = 'intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=pt.sibs.android.mbway;end';
 } 
  else if (isIOS) {
   openBtn.href = 'mbway://';

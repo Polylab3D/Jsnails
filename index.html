@@ -193,68 +193,16 @@ function copiarEAbrirMBWay() {
   const ANDROID_STORE = 'https://play.google.com/store/apps/details?id=pt.sibs.android.mbway';
   const IOS_STORE = 'https://apps.apple.com/pt/app/mb-way/id918126133';
 
-  // Schemes a tentar em sequência (do mais provável para o menos)
-  const ANDROID_SCHEMES = [
-    'mbway://pagamento',
-    'mbway://',
-    'ptmbway://',
-    'sibs://',
-    'intent://pagamento/#Intent;scheme=mbway;package=pt.sibs.android.mbway;end',
-  ];
-  const IOS_SCHEMES = [
-    'mbway://pagamento',
-    'mbway://',
-  ];
-
   openBtn.addEventListener('click', function (e) {
     e.preventDefault();
-
     if (isAndroid) {
-      trySchemes(ANDROID_SCHEMES, 0, ANDROID_STORE);
+      window.location.href = ANDROID_STORE;
     } else if (isIOS) {
-      trySchemes(IOS_SCHEMES, 0, IOS_STORE);
+      window.location.href = IOS_STORE;
     } else {
       window.location.href = 'https://www.mbway.pt';
     }
   });
-
-  function trySchemes(schemes, index, fallbackStore) {
-    if (index >= schemes.length) {
-      // Esgotou todos os schemes, vai para a store
-      window.location.href = fallbackStore;
-      return;
-    }
-
-    const scheme = schemes[index];
-    const start = Date.now();
-
-    // Usa iframe oculto para não navegar fora da página ao tentar o scheme
-    const iframe = document.createElement('iframe');
-    iframe.style.cssText = 'display:none;width:0;height:0;border:0;';
-    document.body.appendChild(iframe);
-
-    // Listener para detectar se a página ficou em background (app abriu)
-    let appOpened = false;
-    const onBlur = function () { appOpened = true; };
-    window.addEventListener('blur', onBlur);
-
-    try {
-      iframe.src = scheme;
-    } catch (err) { /* ignorar erros de scheme inválido */ }
-
-    setTimeout(function () {
-      window.removeEventListener('blur', onBlur);
-      document.body.removeChild(iframe);
-
-      if (appOpened || document.hidden) {
-        // App abriu, não faz nada
-        return;
-      }
-
-      // Scheme não funcionou, tenta o próximo
-      trySchemes(schemes, index + 1, fallbackStore);
-    }, 1500);
-  }
 
   // Insere depois do botão principal
   document.getElementById('main-btn').insertAdjacentElement('afterend', openBtn);

@@ -158,19 +158,37 @@
     });
 
     function copiarEAbrirMBWay() {
-      const PHONE = CONFIG.mbway.phoneValue;
+    const PHONE = CONFIG.mbway.phoneValue;
 
-      navigator.clipboard.writeText(PHONE).then(() => {
-        showToast(CONFIG.text.successMessage);
+  // Copia número
+  navigator.clipboard.writeText(PHONE).catch(() => {
+    const el = document.createElement('textarea');
+    el.value = PHONE;
+    el.style.cssText = 'position:fixed;opacity:0;';
+    document.body.appendChild(el);
+    el.focus(); el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  });
 
-        setTimeout(() => {
-          window.location.href = 'mbway://';
-        }, 400);
+  showToast(CONFIG.text.successMessage);
 
-      }).catch(() => {
-        showToast(CONFIG.text.errorMessage);
-      });
+  // Detecta sistema operativo
+  const isAndroid = /android/i.test(navigator.userAgent);
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+  setTimeout(() => {
+    if (isAndroid) {
+      // Intent URL específico para Android
+      window.location.href = 'intent://payment#Intent;scheme=mbway;package=pt.sibs.android.mbway;end';
+    } else if (isIOS) {
+      window.location.href = 'mbway://';
+    } else {
+      window.location.href = 'https://www.mbway.pt';
     }
+  }, 400);
+}
+
 
     function showToast(msg) {
       const t = document.getElementById('toast');

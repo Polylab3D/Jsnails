@@ -191,7 +191,7 @@ function copiarEAbrirMBWay() {
   openBtn.textContent = '→ Abrir MB WAY agora';
 
   if (isAndroid) {
-    openBtn.href = 'intent://payment?dest=' + PHONE + '#Intent;scheme=mbway;package=pt.sibs.android.mbway;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dpt.sibs.android.mbway;end';
+    openBtn.href = 'mbway://mbway.pt/payment?dest=' + PHONE + '&amount=0.00';
   } else if (isIOS) {
     openBtn.href = 'mbway://';
   } else {

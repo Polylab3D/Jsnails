@@ -157,8 +157,8 @@
       logo.alt = CONFIG.business.name;
     });
 
-    function copiarEAbrirMBWay() {
-    const PHONE = CONFIG.mbway.phoneValue;
+function copiarEAbrirMBWay() {
+  const PHONE = CONFIG.mbway.phoneValue;
 
   // Copia número
   navigator.clipboard.writeText(PHONE).catch(() => {
@@ -173,24 +173,34 @@
 
   showToast(CONFIG.text.successMessage);
 
-  // Detecta sistema operativo
   const isAndroid = /android/i.test(navigator.userAgent);
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 
-  setTimeout(() => {
-    if (isAndroid) {
-      // Tenta deep link direto primeiro
-      window.location.href = 'mbway://payment?dest=' + PHONE;
-      // Fallback para Samsung/Chrome após 1.5s
-      setTimeout(() => {
-        window.location.href = 'intent://payment?dest=' + PHONE + '#Intent;scheme=mbway;package=pt.sibs.android.mbway;S.browser_fallback_url=https%3A%2F%2Fwww.mbway.pt;end';
-      }, 1500);
-    } else if (isIOS) {
-      window.location.href = 'mbway://';
-    } else {
-      window.location.href = 'https://www.mbway.pt';
-    }
-  }, 400);
+  // Cria botão de abertura visível após copiar
+  const existing = document.getElementById('open-btn');
+  if (existing) existing.remove();
+
+  const openBtn = document.createElement('a');
+  openBtn.id = 'open-btn';
+  openBtn.style.cssText = `
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:100%; padding:1rem; border-radius:12px; font-size:16px;
+    font-weight:600; cursor:pointer; text-decoration:none; margin-top:12px;
+    background:var(--primary-color); color:#fff;
+  `;
+  openBtn.textContent = '→ Abrir MB WAY agora';
+
+  if (isAndroid) {
+    openBtn.href = 'intent://payment?dest=' + PHONE + '#Intent;scheme=mbway;package=pt.sibs.android.mbway;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dpt.sibs.android.mbway;end';
+  } else if (isIOS) {
+    openBtn.href = 'mbway://';
+  } else {
+    openBtn.href = 'https://www.mbway.pt';
+  }
+
+  // Insere depois do botão principal
+  document.getElementById('main-btn').insertAdjacentElement('afterend', openBtn);
+}
 
 
     function showToast(msg) {

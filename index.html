@@ -191,11 +191,14 @@ function copiarEAbrirMBWay() {
   openBtn.textContent = '→ Abrir MB WAY agora';
 
  if (isAndroid) {
+  const fallback = encodeURIComponent('https://play.google.com/store/apps/details?id=pt.sibs.android.mbway');
   openBtn.href = 'intent://mbway.pt/payment?dest=' + PHONE + '&amount=0.00' +
-    '#Intent;scheme=mbway;package=pt.sibs.android.mbway;S.browser_fallback_url=https%3A%2F%2Fwww.mbway.pt;end';
-} else if (isIOS) {
+    '#Intent;scheme=mbway;package=pt.sibs.android.mbway;S.browser_fallback_url=' + fallback + ';end';
+} 
+ else if (isIOS) {
   openBtn.href = 'mbway://';
-} else {
+} 
+ else {
   openBtn.href = 'https://www.mbway.pt';
 }
 

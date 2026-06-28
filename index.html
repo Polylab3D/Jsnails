@@ -192,8 +192,7 @@ function copiarEAbrirMBWay() {
 
  if (isAndroid) {
   const fallback = encodeURIComponent('https://play.google.com/store/apps/details?id=pt.sibs.android.mbway');
-  openBtn.href = 'intent://mbway.pt/payment?dest=' + PHONE + '&amount=0.00' +
-    '#Intent;scheme=mbway;package=pt.sibs.android.mbway;S.browser_fallback_url=' + fallback + ';end';
+  openBtn.href = 'intent:#Intent;package=pt.sibs.android.mbway;S.browser_fallback_url=' + fallback + ';end';
 } 
  else if (isIOS) {
   openBtn.href = 'mbway://';

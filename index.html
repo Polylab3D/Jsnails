@@ -179,15 +179,18 @@
 
   setTimeout(() => {
     if (isAndroid) {
-      // Intent URL específico para Android
-      window.location.href = 'intent://payment#Intent;scheme=mbway;package=pt.sibs.android.mbway;end';
+      // Tenta deep link direto primeiro
+      window.location.href = 'mbway://payment?dest=' + PHONE;
+      // Fallback para Samsung/Chrome após 1.5s
+      setTimeout(() => {
+        window.location.href = 'intent://payment?dest=' + PHONE + '#Intent;scheme=mbway;package=pt.sibs.android.mbway;S.browser_fallback_url=https%3A%2F%2Fwww.mbway.pt;end';
+      }, 1500);
     } else if (isIOS) {
       window.location.href = 'mbway://';
     } else {
       window.location.href = 'https://www.mbway.pt';
     }
   }, 400);
-}
 
 
     function showToast(msg) {

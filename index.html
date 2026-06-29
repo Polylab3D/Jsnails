@@ -198,7 +198,14 @@ function copiarEAbrirMBWay() {
     if (isAndroid) {
       window.location.href = ANDROID_STORE;
     } else if (isIOS) {
-      window.location.href = IOS_STORE;
+      // iOS abre a app diretamente via scheme
+      const start = Date.now();
+      window.location.href = 'mbway://';
+      setTimeout(function () {
+        if (Date.now() - start < 3000) {
+          window.location.href = IOS_STORE;
+        }
+      }, 2000);
     } else {
       window.location.href = 'https://www.mbway.pt';
     }
